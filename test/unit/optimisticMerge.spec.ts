@@ -1,5 +1,5 @@
-import {expect} from '../../../utils/expect';
-import {optimisticMerge} from '../../../../lib/utils/optimisticMerge';
+import {expect} from '../utils/expect';
+import {optimisticMerge} from '../../lib/utils/optimisticMerge';
 
 describe('optimisticMerge', () => {
 

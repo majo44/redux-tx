@@ -1,11 +1,11 @@
-import {expect} from '../../utils/expect';
+import {expect} from '../utils/expect';
 import * as sinon from "sinon";
 import {Action, Reducer} from 'redux';
-import {transactionReducer} from "../../../index";
+import {transactionReducer} from "../../index";
 import {
     CANCEL_TRANSACTION_ACTION_TYPE, COMMIT_TRANSACTION_ACTION_TYPE, REJECT_TRANSACTION_ACTION_TYPE, START_TRANSACTION_ACTION_TYPE,
     TIMEOUT_TRANSACTION_ACTION_TYPE
-} from '../../../lib/actions';
+} from '../../lib/actions';
 
 
 describe('reducer', () => {

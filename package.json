@@ -55,7 +55,7 @@
     "compile": "tsc",
     "bundle": "webpack --config webpack.config.js",
     "bundle:min": "webpack --config webpack.config.min.js",
-    "test": "nyc mocha test/unit/**/*.spec.js",
+    "test": "nyc mocha test/unit/*.spec.js",
     "build": "npm run compile && npm run test && npm run bundle && npm run bundle:min"
   }
 }

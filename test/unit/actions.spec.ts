@@ -1,11 +1,11 @@
-import {expect} from '../../utils/expect';
+import {expect} from '../utils/expect';
 import {
     CANCEL_TRANSACTION_ACTION_TYPE,
     cancelTransactionAction,
     COMMIT_TRANSACTION_ACTION_TYPE, commitTransactionAction, REJECT_TRANSACTION_ACTION_TYPE, rejectTransactionAction,
     START_TRANSACTION_ACTION_TYPE,
     startTransactionAction, TIMEOUT_TRANSACTION_ACTION_TYPE, timeoutTransactionAction
-} from '../../../lib/actions';
+} from '../../lib/actions';
 
 describe('action factory', () => {
 

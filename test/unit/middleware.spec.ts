@@ -1,10 +1,10 @@
-import {expect} from '../../utils/expect';
+import {expect} from '../utils/expect';
 import 'zone.js';
-import {transactionMiddleware} from '../../../lib/middleware';
-import {TRANSACTION_ID_ZONE_KEY} from '../../../lib/transaction';
+import {transactionMiddleware} from '../../lib/middleware';
+import {TRANSACTION_ID_ZONE_KEY} from '../../lib/transaction';
 import {Dispatch, MiddlewareAPI} from 'redux';
 import * as sinon from "sinon";
-import {START_TRANSACTION_ACTION_TYPE} from '../../../lib/actions';
+import {START_TRANSACTION_ACTION_TYPE} from '../../lib/actions';
 
 
 describe('middleeware', () => {

@@ -1,11 +1,11 @@
-import {expect} from '../../utils/expect';
+import {expect} from '../utils/expect';
 import * as sinon from "sinon";
-import {setTransactionTimeout, transaction} from '../../../lib/transaction';
+import {setTransactionTimeout, transaction} from '../../lib/transaction';
 import {
     CANCEL_TRANSACTION_ACTION_TYPE, COMMIT_TRANSACTION_ACTION_TYPE, REJECT_TRANSACTION_ACTION_TYPE,
     START_TRANSACTION_ACTION_TYPE, TIMEOUT_TRANSACTION_ACTION_TYPE
-} from '../../../lib/actions';
-import {semaphore} from '../../utils/promise';
+} from '../../lib/actions';
+import {semaphore} from '../utils/promise';
 
 describe('transaction', () => {
     let dispatch: sinon.SinonSpy;
