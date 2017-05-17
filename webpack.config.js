@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let externals = require('./webpack.externals');
 let packageName = require('./package').name;
+let path = require('path');
 let packageNameCamelCase = packageName.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
 
 module.exports = {
@@ -16,7 +17,7 @@ module.exports = {
     devtool: "#source-map",
     resolve: {
         alias : {
-            "tslib" :   __dirname + "/node_modules/tslib/tslib.js"
+            "tslib" :   path.join(__dirname, "node_modules/tslib/tslib.js")
         }
     },
     plugins: []

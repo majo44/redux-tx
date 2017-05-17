@@ -4,5 +4,9 @@ node_js:
 branches:
   only:
     - master
+install:
+  - npm install
+  - npm install coveralls
 script:
   - npm run build
+  - cat ./docs/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
