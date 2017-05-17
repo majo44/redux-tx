@@ -1,4 +1,6 @@
 # redux-tx
+[![Build Status](https://travis-ci.org/majo44/redux-tx.svg?branch=master)](https://travis-ci.org/majo44/redux-tx)
+
 When the sagas are to much, and the thunk is not enough.
 
  
