@@ -1,0 +1,8 @@
+{
+  "zone.js": {
+    "commonjs": "zone.js",
+    "commonjs2": "zone.js",
+    "amd": "zone.js",
+    "root": "Zone"
+  }
+}

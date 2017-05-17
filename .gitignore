@@ -1,0 +1,8 @@
+node_modules
+docs/coverage
+.idea
+*.iml
+*.js
+*.js.map
+*.d.ts
+!webpack.*
