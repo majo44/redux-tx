@@ -1,6 +1,7 @@
 node_modules
 docs/coverage
 .idea
+.nyc_output
 *.iml
 *.js
 *.js.map
