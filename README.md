@@ -1,6 +1,7 @@
 # redux-tx
 [![Build Status](https://travis-ci.org/majo44/redux-tx.svg?branch=master)](https://travis-ci.org/majo44/redux-tx)
 [![Coverage Status](https://coveralls.io/repos/github/majo44/redux-tx/badge.svg?branch=master)](https://coveralls.io/github/majo44/redux-tx?branch=master)
+[![npm version](https://badge.fury.io/js/redux-tx.svg)](https://badge.fury.io/js/redux-tx)
 
 When the sagas are to much, and the thunk is not enough.
 
