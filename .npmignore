@@ -1,0 +1,9 @@
+node_modules
+docs/coverage
+test
+.gitignore
+tsconfig.json
+*.ts
+.idea
+webpack.*
+.travis.yml
