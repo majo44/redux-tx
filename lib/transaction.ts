@@ -70,6 +70,7 @@ export function transaction(): TransactionPromise {
         proxyReject = reject;
     });
     let phase: TransactionPhase;
+    let outsideZone = Zone.current;
 
     function onStart() {
         phase = 'PENDING';
@@ -83,7 +84,7 @@ export function transaction(): TransactionPromise {
                 clearTimeout(timeout);
             }
             dispatch(cancelTransactionAction());
-            proxyResolve();
+            outsideZone.run(proxyResolve);
         }
     }
 
@@ -94,7 +95,7 @@ export function transaction(): TransactionPromise {
                 clearTimeout(timeout);
             }
             dispatch(commitTransactionAction());
-            proxyResolve();
+            outsideZone.run(proxyResolve);
         }
     }
 
@@ -105,14 +106,14 @@ export function transaction(): TransactionPromise {
             }
             phase = 'REJECTED';
             dispatch(rejectTransactionAction(error));
-            proxyReject(error);
+            outsideZone.run(() => proxyReject(error));
         }
     }
 
     function onTimeout() {
         phase = 'TIMEOUTED';
         dispatch(timeoutTransactionAction());
-        proxyReject(`Transaction ${name} (id: ${transactionId}) timeout!`);
+        outsideZone.run(() => proxyReject(`Transaction ${name} (id: ${transactionId}) timeout!`));
     }
 
     let transactionZone = Zone.current.fork({
