@@ -61,6 +61,7 @@ export function transaction(): TransactionPromise {
     timeoutTime = typeof arguments[2 + shift] === 'undefined' ? transactionTimeout : arguments[2 + shift] ;
 
     let transactionId: number = transactionIdCounter++;
+    let parentTransactionId: number = Zone.current.get(TRANSACTION_ID_ZONE_KEY);
     let timeout: any;
     let proxyResolve: () => void;
     let proxyReject: (ex: any) => void;
@@ -72,7 +73,7 @@ export function transaction(): TransactionPromise {
 
     function onStart() {
         phase = 'PENDING';
-        dispatch(startTransactionAction(name));
+        dispatch(startTransactionAction(name, transactionId, parentTransactionId));
     }
 
     function onCancel() {
@@ -126,16 +127,19 @@ export function transaction(): TransactionPromise {
         if (timeoutTime > 0) {
             timeout = setTimeout(onTimeout, timeoutTime);
         }
-        let x: any = fn();
-        if (x && x.then) {
-            return x.then(() => {
+        try {
+            let x: any = fn();
+            if (x && x.then) {
+                return x.then(() => {
+                    onCommit();
+                }, (ex: any) => {
+                    onError(ex);
+                });
+            } else {
                 onCommit();
-            }, (ex: any) => {
-                onError(ex);
-            });
-        } else {
-            onCommit();
-            return Promise.resolve();
+            }
+        } catch (ex) {
+            onError(ex);
         }
     });
 

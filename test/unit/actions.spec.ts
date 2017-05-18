@@ -10,10 +10,15 @@ import {
 describe('action factory', () => {
 
     it('startTransactionAction should return proper action', () => {
-        expect(startTransactionAction('name')).eql({
+        expect(startTransactionAction('name', 1, 2)).eql({
             type: START_TRANSACTION_ACTION_TYPE,
             payload: {
                 transactionName: 'name'
+            },
+
+            meta: {
+                transactionId: 1,
+                parentTransactionId: 2
             }
         });
     });

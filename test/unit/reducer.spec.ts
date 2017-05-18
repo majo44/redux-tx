@@ -1,6 +1,6 @@
 import {expect} from '../utils/expect';
 import * as sinon from "sinon";
-import {Action, Reducer} from 'redux';
+import {Reducer} from 'redux';
 import {transactionReducer} from "../../index";
 import {
     CANCEL_TRANSACTION_ACTION_TYPE, COMMIT_TRANSACTION_ACTION_TYPE, REJECT_TRANSACTION_ACTION_TYPE, START_TRANSACTION_ACTION_TYPE,
@@ -46,6 +46,7 @@ describe('reducer', () => {
     });
 
     describe('inside transaction', () => {
+
         it('for other actions and not existing transaction should just return state', () => {
             let action = {type: 'any', meta: {transactionId: 1}};
             expect(reducer(orgState, action)).to.eq(orgState);
@@ -110,6 +111,61 @@ describe('reducer', () => {
             orgState.$$transactions = {1: {state: {a: 1}, beforeState: {}}};
             let newState = reducer(orgState, action);
             expect(newState.a).eq(1);
+        });
+
+        it('for commit action of empty transaction should return same state', () => {
+            let action = {
+                type: COMMIT_TRANSACTION_ACTION_TYPE,
+                meta: {transactionId: 1}};
+            orgState.$$transactions = {1: {beforeState: {}}};
+            let newState = reducer(orgState, action);
+            delete orgState.$$transactions;
+            expect(newState).eql(orgState);
+        });
+
+        describe('inside transaction', () => {
+            it('for StartTransactionAction and parent not exist should return same state', () => {
+                let action = {
+                    type: START_TRANSACTION_ACTION_TYPE,
+                    payload: {transactionName: "a"},
+                    meta: {transactionId: 2, parentTransactionId: 1}};
+                let newState = reducer(orgState, action);
+                expect(newState).eq(orgState);
+            });
+            it('for StartTransactionAction and parent should create new transaction and init it with the state from parent', () => {
+                let action = {
+                    type: START_TRANSACTION_ACTION_TYPE,
+                    payload: {transactionName: "a"},
+                    meta: {transactionId: 2, parentTransactionId: 1}};
+                orgState.$$transactions = {1: {beforeState: {a: 1}}};
+                let newState = reducer(orgState, action);
+                expect(newState.$$transactions[2].beforeState.a).eq(1);
+            });
+
+            it('for CommitTransactionAction and parent not exist should just remove the transactions', () => {
+                let action = {
+                    type: COMMIT_TRANSACTION_ACTION_TYPE,
+                    meta: {transactionId: 2}};
+                orgState.$$transactions = {
+                    2: {state: {a: 1}, beforeState: {}, parentId: 1}
+                };
+                let newState = reducer(orgState, action);
+                expect(newState.$$transactions).undefined;
+            });
+
+            it('for CommitTransactionAction and parent exist should merge changes to parent', () => {
+                let action = {
+                    type: COMMIT_TRANSACTION_ACTION_TYPE,
+                    meta: {transactionId: 2}};
+                orgState.$$transactions = {
+                    2: {state: {a: 1}, beforeState: {}, parentId: 1},
+                    1: {beforeState: {}}
+                };
+                let newState = reducer(orgState, action);
+                expect(newState.$$transactions[2]).undefined;
+                expect(newState.$$transactions[1].state.a).eq(1);
+
+            });
         })
     });
 });

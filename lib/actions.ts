@@ -4,6 +4,7 @@ import {Action} from 'redux';
 export interface ActionInTransaction extends Action {
     meta?: {
         transactionId?: number
+        parentTransactionId?: number
     };
 }
 
@@ -11,11 +12,21 @@ export const START_TRANSACTION_ACTION_TYPE = 'StartTransactionAction';
 export interface StartTransactionAction extends ActionInTransaction {
     type: typeof START_TRANSACTION_ACTION_TYPE;
     payload: {
-        transactionName: string;
+        transactionName: string
+    }
+    meta: {
+        transactionId: number,
+        parentTransactionId?: number
     }
 }
-export function startTransactionAction(name: string): StartTransactionAction {
-    return {type: START_TRANSACTION_ACTION_TYPE, payload: {transactionName: name}};
+export function startTransactionAction(name: string, transactionId: number, parentTransactionId?: number): StartTransactionAction {
+    return {type: START_TRANSACTION_ACTION_TYPE,
+        payload: {transactionName: name},
+        meta: {
+            transactionId,
+            parentTransactionId
+        }
+    };
 }
 
 
@@ -37,7 +48,6 @@ export interface RejectTransactionAction extends ActionInTransaction {
 export function rejectTransactionAction(reason: any): RejectTransactionAction {
     return {type: REJECT_TRANSACTION_ACTION_TYPE, payload: {reason}};
 }
-
 
 export const CANCEL_TRANSACTION_ACTION_TYPE = 'CancelTransactionAction';
 export interface CancelTransactionAction extends ActionInTransaction {

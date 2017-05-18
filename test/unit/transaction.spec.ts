@@ -77,8 +77,20 @@ describe('transaction', () => {
         expect(tx.state).eq('REJECTED');
     });
 
-    it('should support rejection from promise without timout', async () => {
+    it('should support rejection from async', async () => {
         let txBody = sinon.spy(async () => {throw 'Error'});
+        let tx = transaction(dispatch, txBody, 0);
+        let errorSpy = sinon.spy();
+        try {
+            await tx;
+        } catch (ex) {
+            errorSpy(ex);
+        }
+        expect(tx.state).eq('REJECTED');
+    });
+
+    it('should support rejection from sync', async () => {
+        let txBody = sinon.spy(() => {throw 'Error'});
         let tx = transaction(dispatch, txBody, 0);
         let errorSpy = sinon.spy();
         try {
