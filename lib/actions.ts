@@ -13,11 +13,11 @@ export interface StartTransactionAction extends ActionInTransaction {
     type: typeof START_TRANSACTION_ACTION_TYPE;
     payload: {
         transactionName: string
-    }
+    };
     meta: {
         transactionId: number,
         parentTransactionId?: number
-    }
+    };
 }
 export function startTransactionAction(name: string, transactionId: number, parentTransactionId?: number): StartTransactionAction {
     return {type: START_TRANSACTION_ACTION_TYPE,
@@ -43,7 +43,7 @@ export interface RejectTransactionAction extends ActionInTransaction {
     type: typeof REJECT_TRANSACTION_ACTION_TYPE;
     payload: {
         reason: any;
-    }
+    };
 }
 export function rejectTransactionAction(reason: any): RejectTransactionAction {
     return {type: REJECT_TRANSACTION_ACTION_TYPE, payload: {reason}};
@@ -65,4 +65,5 @@ export function timeoutTransactionAction(): TimeoutTransactionAction {
     return {type: TIMEOUT_TRANSACTION_ACTION_TYPE};
 }
 
-export type TransactionActions = StartTransactionAction | CommitTransactionAction | RejectTransactionAction | CancelTransactionAction | TimeoutTransactionAction;
+export type TransactionActions =
+    StartTransactionAction | CommitTransactionAction | RejectTransactionAction | CancelTransactionAction | TimeoutTransactionAction;

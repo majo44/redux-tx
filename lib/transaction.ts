@@ -1,4 +1,4 @@
-import "zone.js";
+import 'zone.js';
 import {Dispatch} from 'redux';
 import {
     cancelTransactionAction, commitTransactionAction, rejectTransactionAction, startTransactionAction,
@@ -30,7 +30,7 @@ export interface TransactionPromise extends Promise<void> {
  * @param tx the transaction code
  * @param timeout optional timeout for transaction, if not provided, the global one will be used, the default is 1 min
  */
-export function transaction(dispatch: Dispatch<any>, tx: () => void | Promise<void>, timeout?: number): TransactionPromise
+export function transaction(dispatch: Dispatch<any>, tx: () => void | Promise<void>, timeout?: number): TransactionPromise;
 
 /**
  * Run code in transaction.
@@ -39,7 +39,7 @@ export function transaction(dispatch: Dispatch<any>, tx: () => void | Promise<vo
  * @param tx the transaction code
  * @param timeout optional timeout for transaction, if not provided, the global one will be used, the default is 1 min
  */
-export function transaction(name: string, dispatch: Dispatch<any>, tx: () => void | Promise<void>, timeout?: number): TransactionPromise
+export function transaction(name: string, dispatch: Dispatch<any>, tx: () => void | Promise<void>, timeout?: number): TransactionPromise;
 export function transaction(): TransactionPromise {
 
     // parsing attrs;
@@ -49,7 +49,7 @@ export function transaction(): TransactionPromise {
     let timeoutTime: any;
 
     let shift = 0;
-    if (typeof arguments[0] == "string") {
+    if (typeof arguments[0] === 'string') {
         name = arguments[0];
         shift = 1;
     } else {

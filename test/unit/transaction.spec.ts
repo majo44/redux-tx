@@ -1,5 +1,5 @@
 import {expect} from '../utils/expect';
-import * as sinon from "sinon";
+import * as sinon from 'sinon';
 import {setTransactionTimeout, transaction} from '../../lib/transaction';
 import {
     CANCEL_TRANSACTION_ACTION_TYPE, COMMIT_TRANSACTION_ACTION_TYPE, REJECT_TRANSACTION_ACTION_TYPE,
@@ -16,7 +16,7 @@ describe('transaction', () => {
     });
 
     it('should dispatch start and commit on transaction ', () => {
-        let txBody = sinon.spy(() => {});
+        let txBody = sinon.spy(() => { return; });
         let tx = transaction(dispatch, txBody);
         expect(txBody).to.be.calledOnce;
         expect(dispatch).to.be.calledTwice;
@@ -30,7 +30,7 @@ describe('transaction', () => {
                 setTimeout(() => {
                     expect(tx.state).eq('PENDING');
                     resolve();
-                },1);
+                }, 1);
             });
         });
         let tx = transaction(dispatch, txBody);
@@ -41,7 +41,7 @@ describe('transaction', () => {
     });
 
     it('should deliver proper name', () => {
-        let txBody = sinon.spy(() => {});
+        let txBody = sinon.spy(() => { return; });
         let tx = transaction('name', dispatch, txBody);
         expect(dispatch.args[0][0].payload).eql({transactionName: 'name'});
     });
@@ -61,7 +61,7 @@ describe('transaction', () => {
     });
 
     it('should support rejection from promise', async () => {
-        let txBody = sinon.spy(async () => {throw 'Error'});
+        let txBody = sinon.spy(async () => {throw 'Error'; });
         let tx = transaction(dispatch, txBody);
         let errorSpy = sinon.spy();
         try {
@@ -78,7 +78,7 @@ describe('transaction', () => {
     });
 
     it('should support rejection from async', async () => {
-        let txBody = sinon.spy(async () => {throw 'Error'});
+        let txBody = sinon.spy(async () => {throw 'Error'; });
         let tx = transaction(dispatch, txBody, 0);
         let errorSpy = sinon.spy();
         try {
@@ -90,7 +90,7 @@ describe('transaction', () => {
     });
 
     it('should support rejection from sync', async () => {
-        let txBody = sinon.spy(() => {throw 'Error'});
+        let txBody = sinon.spy(() => {throw 'Error'; });
         let tx = transaction(dispatch, txBody, 0);
         let errorSpy = sinon.spy();
         try {
@@ -113,7 +113,7 @@ describe('transaction', () => {
         }, 20);
         try {
             await tx;
-        } catch(ex) {
+        } catch (ex) {
             errorSpy(ex);
         }
         expect(errorSpy).to.be.called;
@@ -136,7 +136,7 @@ describe('transaction', () => {
         }, 20);
         try {
             await tx;
-        } catch(ex) {
+        } catch (ex) {
             errorSpy(ex);
         }
         expect(errorSpy).to.be.called;
@@ -155,14 +155,14 @@ describe('transaction', () => {
         }, 20);
         try {
             await tx;
-        } catch(ex) {
+        } catch (ex) {
             errorSpy(ex);
         }
         expect(errorSpy).to.not.be.called;
     });
 
     it('should do nothing if cancel is after commit', async () => {
-        let txBody = sinon.spy(async () => {});
+        let txBody = sinon.spy(async () => { return; });
         let tx = transaction(dispatch, txBody);
         await tx;
         tx.cancel();
@@ -173,7 +173,7 @@ describe('transaction', () => {
         let sem = semaphore();
         let txBody = sinon.spy(async () => {
             await sem;
-            throw 'Error'
+            throw 'Error';
         });
         let tx = transaction(dispatch, txBody, 0);
         tx.cancel();

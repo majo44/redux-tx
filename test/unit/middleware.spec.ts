@@ -3,7 +3,7 @@ import 'zone.js';
 import {transactionMiddleware} from '../../lib/middleware';
 import {TRANSACTION_ID_ZONE_KEY} from '../../lib/transaction';
 import {Dispatch, MiddlewareAPI} from 'redux';
-import * as sinon from "sinon";
+import * as sinon from 'sinon';
 import {START_TRANSACTION_ACTION_TYPE} from '../../lib/actions';
 
 
@@ -22,7 +22,9 @@ describe('middleeware', () => {
             getState: () => {
                 return state;
             },
-            dispatch: ():any => {return}
+            dispatch: (): any => {
+                return;
+            }
         };
     });
 
@@ -65,7 +67,8 @@ describe('middleeware', () => {
         });
     });
 
-    it('should not throw exception if action is marked transaction id and transaction do not exists, but this is start transaction action', () => {
+    it('should not throw exception if action is marked transaction ' +
+        'id and transaction do not exists, but this is start transaction action', () => {
         let action: any = {type: START_TRANSACTION_ACTION_TYPE, meta: {transactionId: 1}};
         state = {};
         Zone.current.fork({

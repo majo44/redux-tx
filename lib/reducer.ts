@@ -1,4 +1,4 @@
-import {Action, Reducer} from 'redux';
+import {Reducer} from 'redux';
 import {optimisticMerge} from './utils/optimisticMerge';
 import {
     CANCEL_TRANSACTION_ACTION_TYPE,
@@ -8,18 +8,18 @@ import {
 
 
 export interface Transaction {
-    name?: string,
-    id: number
+    name?: string;
+    id: number;
     parentId?: number;
-    state?: StateWithTransactions,
-    beforeState?: StateWithTransactions
+    state?: StateWithTransactions;
+    beforeState?: StateWithTransactions;
 }
 
 export interface StateWithTransactions {
-    [key: string]: any,
+    [key: string]: any;
     $$transactions: {
         [transactionId: number]: Transaction;
-    }
+    };
 }
 
 function removeTransaction(
@@ -39,9 +39,9 @@ function updateTransaction(
 
 function setTransactionsOnState(state: StateWithTransactions, transactions: {[transactionId: number]: Transaction}): StateWithTransactions {
     if (!transactions || Object.keys(transactions).length < 1) {
-        delete state.$$transactions
+        delete state.$$transactions;
     } else {
-        state.$$transactions = transactions
+        state.$$transactions = transactions;
     }
     return state;
 }
@@ -173,7 +173,7 @@ export function transactionReducer<S>(reducer: Reducer<S>): Reducer<S> {
                 // if state was changed we will copy the transactions
                 newState.$$transactions = state.$$transactions;
             }
-            return <any> newState
+            return <any> newState;
         }
-    }
+    };
 }

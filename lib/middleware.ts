@@ -22,11 +22,11 @@ export function transactionMiddleware<S>(api: MiddlewareAPI<S>): (next: Dispatch
             if (action.meta && action.meta.transactionId && action.type !== START_TRANSACTION_ACTION_TYPE) {
                 let state: StateWithTransactions = <any> api.getState();
                 if (!state.$$transactions || !state.$$transactions[action.meta.transactionId]) {
-                    throw "IgnoreActionOnNotExistingTransaction";
+                    throw 'IgnoreActionOnNotExistingTransaction';
                 }
             }
 
             return next(action);
         };
-    }
+    };
 }

@@ -1,5 +1,4 @@
 import {expect} from '../utils/expect';
-import * as sinon from "sinon";
 import {Action, applyMiddleware, combineReducers, createStore, Dispatch, Store} from 'redux';
 import {transaction, TRANSACTION_ID_ZONE_KEY, TransactionPromise} from '../../lib/transaction';
 import {transactionReducer} from '../../lib/reducer';
@@ -14,14 +13,14 @@ describe('e2e example1', () => {
         type: typeof SearchExecutedActionType;
         payload: {
             query: string;
-        }
+        };
     }
 
-    function searchExecutedAction(query: string) : SearchExecutedAction {
+    function searchExecutedAction(query: string): SearchExecutedAction {
         return {
             type: SearchExecutedActionType,
             payload: {query}
-        }
+        };
     }
 
 
@@ -31,14 +30,14 @@ describe('e2e example1', () => {
         type: typeof SearchSuccessActionType;
         payload: {
             results: Array<string>;
-        }
+        };
     }
 
-    function searchSuccessAction(results: Array<string>) : SearchSuccessAction {
+    function searchSuccessAction(results: Array<string>): SearchSuccessAction {
         return {
             type: SearchSuccessActionType,
             payload: {results}
-        }
+        };
     }
 
 
@@ -55,19 +54,19 @@ describe('e2e example1', () => {
                 return Object.assign({}, {
                     query: action.payload.query,
                     results: undefined
-                })
+                });
             }
             case SearchSuccessActionType: {
                 return Object.assign({}, state, {
                     results: action.payload.results
-                })
+                });
             }
         }
         return state;
     }
 
     interface MyState {
-        search: SearchState
+        search: SearchState;
     }
 
     let service: (query: string) => Promise<Array<string>>;
@@ -78,8 +77,8 @@ describe('e2e example1', () => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([query]);
-                }, 10)
-            })
+                }, 10);
+            });
         };
 
         function executeSearch(query: string) {
@@ -116,8 +115,8 @@ describe('e2e example1', () => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     resolve([query]);
-                }, 10)
-            })
+                }, 10);
+            });
         };
 
         function executeSearch(query: string) {
@@ -130,7 +129,7 @@ describe('e2e example1', () => {
                     dispatch(searchSuccessAction(
                         await service(query)));
                     transaction('searchTransaction', dispatch, async (): Promise<void> => {
-                        dispatch((dispatch: Dispatch<any>, getState: () => MyState) => {
+                        dispatch((subdispatch: Dispatch<any>, getState: () => MyState) => {
                             let beforeState = (<any>getState()).$$transactions[Zone.current.get(TRANSACTION_ID_ZONE_KEY)].beforeState;
                             expect(beforeState).eql({ search: { query: 'aa', results: [ 'aa' ] } });
                         });

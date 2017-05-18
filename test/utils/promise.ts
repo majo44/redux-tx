@@ -1,7 +1,7 @@
 
 export interface Semaphore extends Promise<void> {
     continue(error?: any): void;
-    assert(fn: () => void) : void;
+    assert(fn: () => void): void;
 }
 
 export function timeoutPromise(value?: any, delay: number = 0): Promise<any> {
@@ -21,16 +21,16 @@ export function semaphore(): Semaphore {
             semaphoreInst.continue(ex);
         }
     };
-    let promise: Promise<void> = new Promise<void>((resolve: () => void, reject: (error:any) => void  ) => {
+    let promise: Promise<void> = new Promise<void>((resolve: () => void, reject: (error: any) => void  ) => {
         semaphoreInst.continue = (error) => {
             if (error) {
                 reject.call(promise, error);
             } else {
                 resolve.apply(promise);
             }
-        }
+        };
     });
-    semaphoreInst.then = <any> function () {promise.then.apply(promise, arguments)};
-    semaphoreInst.catch = <any> function () {promise.catch.apply(promise, arguments)};
+    semaphoreInst.then = <any> function () {promise.then.apply(promise, arguments); };
+    semaphoreInst.catch = <any> function () {promise.catch.apply(promise, arguments); };
     return semaphoreInst;
 }

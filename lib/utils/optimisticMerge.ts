@@ -1,6 +1,6 @@
 export function optimisticMerge(outisde: any, before: any, after: any, path: Array<string> = []) {
     if (!isObject(outisde, before, after)) {
-        throw "Transaction commit failed. The state should bean an plain object."
+        throw 'Transaction commit failed. The state should bean an plain object.';
     }
     let target: any = {};
     uniq(Object.keys(after)
@@ -18,9 +18,10 @@ export function optimisticMerge(outisde: any, before: any, after: any, path: Arr
                     }
                 } else {
                     if (isObject(outisde[key], before[key], after[key])) {
-                        target[key] = optimisticMerge(outisde[key], before[key], after[key], [...path, key])
+                        target[key] = optimisticMerge(outisde[key], before[key], after[key], [...path, key]);
                     } else {
-                        throw `The race detected. Property ${path.join('.')}.${key} of state updated during the transaction. Transactions trays` +
+                        throw `The race detected. Property ${path.join('.')}.${key}` +
+                        `of state updated during the transaction. Transactions trays` +
                         ` to commit new value to this same property.`;
                     }
                 }
@@ -30,8 +31,8 @@ export function optimisticMerge(outisde: any, before: any, after: any, path: Arr
 }
 
 function isObject(outisde: any,  before: any, after: any) {
-    return typeof outisde == typeof before &&
-        typeof before == typeof after &&
+    return typeof outisde === typeof before &&
+        typeof before === typeof after &&
         typeof after === 'object' &&
         !Array.isArray(after);
 }
@@ -42,9 +43,9 @@ function uniq(a: Array<any>): Array<any> {
     let out = [];
     let len = a.length;
     let j = 0;
-    for(let i = 0; i < len; i++) {
+    for (let i = 0; i < len; i++) {
         let item = a[i];
-        if(seen[item] !== 1) {
+        if (seen[item] !== 1) {
             seen[item] = 1;
             out[j++] = item;
         }

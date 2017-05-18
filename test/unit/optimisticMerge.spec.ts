@@ -33,14 +33,14 @@ describe('optimisticMerge', () => {
     });
 
     it('should throw exception if changes are in global and transaction', () => {
-        expect(() => optimisticMerge({a: 1}, {a:2}, {a: 3})).to.throw(/The race detected/);
-        expect(() => optimisticMerge({}, {a:2}, {a: 3})).to.throw(/The race detected/);
-        expect(() => optimisticMerge({a: 3}, {a:2}, {})).to.throw(/The race detected/);
-        expect(() => optimisticMerge({a: 3}, {}, {a:2})).to.throw(/The race detected/);
+        expect(() => optimisticMerge({a: 1}, {a: 2}, {a: 3})).to.throw(/The race detected/);
+        expect(() => optimisticMerge({}, {a: 2}, {a: 3})).to.throw(/The race detected/);
+        expect(() => optimisticMerge({a: 3}, {a: 2}, {})).to.throw(/The race detected/);
+        expect(() => optimisticMerge({a: 3}, {}, {a: 2})).to.throw(/The race detected/);
     });
 
     it('should throw exception if array instance changed', () => {
-        expect(() => optimisticMerge({a: []}, {a:[]}, {a: []})).to.throw(/The race detected/);
+        expect(() => optimisticMerge({a: []}, {a: []}, {a: []})).to.throw(/The race detected/);
     });
 
     it('should not throw exception if array instance not changed', () => {

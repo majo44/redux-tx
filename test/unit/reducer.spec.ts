@@ -1,7 +1,7 @@
 import {expect} from '../utils/expect';
-import * as sinon from "sinon";
+import * as sinon from 'sinon';
 import {Reducer} from 'redux';
-import {transactionReducer} from "../../index";
+import {transactionReducer} from '../../index';
 import {
     CANCEL_TRANSACTION_ACTION_TYPE, COMMIT_TRANSACTION_ACTION_TYPE, REJECT_TRANSACTION_ACTION_TYPE, START_TRANSACTION_ACTION_TYPE,
     TIMEOUT_TRANSACTION_ACTION_TYPE
@@ -73,7 +73,7 @@ describe('reducer', () => {
         it('for StartTransactionAction it should set new transaction in state', () => {
             let action = {
                 type: START_TRANSACTION_ACTION_TYPE,
-                payload: {transactionName: "a"},
+                payload: {transactionName: 'a'},
                 meta: {transactionId: 1}};
             let newState = reducer(orgState, action);
             expect(newState.$$transactions[1]).to.not.be.undefined;
@@ -127,7 +127,7 @@ describe('reducer', () => {
             it('for StartTransactionAction and parent not exist should return same state', () => {
                 let action = {
                     type: START_TRANSACTION_ACTION_TYPE,
-                    payload: {transactionName: "a"},
+                    payload: {transactionName: 'a'},
                     meta: {transactionId: 2, parentTransactionId: 1}};
                 let newState = reducer(orgState, action);
                 expect(newState).eq(orgState);
@@ -135,7 +135,7 @@ describe('reducer', () => {
             it('for StartTransactionAction and parent should create new transaction and init it with the state from parent', () => {
                 let action = {
                     type: START_TRANSACTION_ACTION_TYPE,
-                    payload: {transactionName: "a"},
+                    payload: {transactionName: 'a'},
                     meta: {transactionId: 2, parentTransactionId: 1}};
                 orgState.$$transactions = {1: {beforeState: {a: 1}}};
                 let newState = reducer(orgState, action);
@@ -166,6 +166,6 @@ describe('reducer', () => {
                 expect(newState.$$transactions[1].state.a).eq(1);
 
             });
-        })
+        });
     });
 });
