@@ -128,7 +128,7 @@ describe('e2e example1', () => {
                     dispatch(searchExecutedAction(query));
                     dispatch(searchSuccessAction(
                         await service(query)));
-                    transaction('searchTransaction', dispatch, async (): Promise<void> => {
+                    await transaction('searchTransaction', dispatch, async (): Promise<void> => {
                         dispatch((subdispatch: Dispatch<any>, getState: () => MyState) => {
                             let beforeState = (<any>getState()).$$transactions[Zone.current.get(TRANSACTION_ID_ZONE_KEY)].beforeState;
                             expect(beforeState).eql({ search: { query: 'aa', results: [ 'aa' ] } });

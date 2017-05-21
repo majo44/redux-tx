@@ -29,7 +29,6 @@ export function startTransactionAction(name: string, transactionId: number, pare
     };
 }
 
-
 export const COMMIT_TRANSACTION_ACTION_TYPE = 'CommitTransactionAction';
 export interface CommitTransactionAction extends ActionInTransaction {
     type: typeof COMMIT_TRANSACTION_ACTION_TYPE;

@@ -67,13 +67,17 @@ function reduceStartTransactionAction(state: StateWithTransactions, action: Star
     // and we have to remove cycle
     delete beforeState.$$transactions;
 
+    let transaction: Transaction = {
+        id: transactionId,
+        name: action.payload.transactionName,
+        beforeState
+    };
+    if (action.meta.parentTransactionId) {
+        transaction.parentId = action.meta.parentTransactionId;
+    }
     // and return state with updated list of transactions
     return setTransactionsOnState(Object.assign({}, state),
-        updateTransaction(transactions,  {
-            id: transactionId,
-            name: action.payload.transactionName,
-            beforeState
-        }));
+        updateTransaction(transactions, transaction));
 }
 
 function reduceRejectTransactionAction(state: StateWithTransactions, action: TransactionActions): any {
