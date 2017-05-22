@@ -1,6 +1,6 @@
 {
   "name": "redux-tx",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "description": "Optimistic Transactions for Redux",
   "keywords": [
@@ -21,7 +21,7 @@
     "url": "https://github.com/majo44/redux-tx.git"
   },
   "npmName": "redux-tx",
-  "browser": "redux-tx.js",
+  "browser": "redux-tx.min.js",
   "main": "index.js",
   "typings": "./index.d.ts",
   "dependencies": {
