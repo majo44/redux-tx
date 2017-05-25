@@ -9,6 +9,7 @@ import {StateWithTransactions} from './reducer';
  * This middleware is responsible for mark action with transaction id, and reject actions which are targeting not existing.
  */
 export function transactionMiddleware<S>(api: MiddlewareAPI<S>): (next: Dispatch<S>) => Dispatch<S> {
+    let outsideZone = Zone.current;
     return (next: Dispatch<S>): Dispatch<S> => {
         return <A extends ActionInTransaction>(action: A): A => {
             if (!action.meta || !action.meta.transactionId) {
@@ -26,7 +27,7 @@ export function transactionMiddleware<S>(api: MiddlewareAPI<S>): (next: Dispatch
                 }
             }
 
-            return next(action);
+            return outsideZone.run<A>(() => next(action));
         };
     };
 }
