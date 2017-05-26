@@ -26,8 +26,11 @@ export function transactionMiddleware<S>(api: MiddlewareAPI<S>): (next: Dispatch
                     throw 'IgnoreActionOnNotExistingTransaction';
                 }
             }
-
-            return outsideZone.run<A>(() => next(action));
+            if (typeof action === 'function') {
+                return <A> next(action);
+            } else {
+                return outsideZone.run<A>(() => next(action));
+            }
         };
     };
 }
