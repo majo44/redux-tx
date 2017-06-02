@@ -108,15 +108,16 @@ tx.cancel();
    * dispatching `StartTransactionAction` action
    * reducer for `StartTransactionAction` is creating new state branch with the copy of current state
 2. When you dispatching action within the transaction
-   * the action is marked by middleware with the transaction identifier
+   * the action is marked by middleware with the transaction identifier (taken from zone)
    * your reducer is getting the state from brunch instead of root reference 
    * if you mutate state, all mutations are going to the branch instead of root reference
 3. After finish of transaction if any exception was not thrown and transaction was not cancelled
    * `CommitTransactionAction` action is dispatched
    * reducer is merging the state from transaction in to root state reference, 
-   merge is comparing current state with the state which application had on transaction start, to distinguish there was Race occurs
+   merge is comparing current state with the state which application had on transaction start (beforeState), 
+   to distinguish there was Race occurs
       * if race occurs the exception will be thrown, transaction promise will be rejected with exception 
-      * if there is no race, transaction promise will be resolved, and the state is mutated
+      * if there is no race, transaction promise will be resolved, and the root state reference is mutated
 4. If there was exception thrown within the transaction
    * `RejectTransactionAction` action is dispatched
    * reducer is removing the branch from state
